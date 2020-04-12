@@ -1,8 +1,10 @@
-from flask_httpauth import HTTPBasicAuth
-from flask import request, jsonify, url_for, g
-from .database import db
+
+from flask import request, jsonify, url_for
+
+from auth import auth
+from database import db
 from .models import User
-auth = HTTPBasicAuth()
+
 
 def new_user():
     username = request.json.get('username')
@@ -34,10 +36,3 @@ def get_user(id):
 
 
 
-@auth.verify_password
-def verify_password(username, password):
-    user = User.query.filter_by(username=username).first()
-    if not user or not user.verify_password(password):
-        return False
-    # g.user = user
-    return True
