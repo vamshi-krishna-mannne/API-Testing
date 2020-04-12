@@ -33,18 +33,7 @@ def get_user(id):
         return "user is not registered yet"
     return jsonify({'username': user.username})
 
-def create_dummy_users():
-    with open('users.json') as file:
-        data = json.load(file)
-    for user_item in data:
-        if User.query.filter_by(username=user_item['username']).first() is not None:
-            return "dummy users already created"
-        user = User(username=user_item['username'])
-        user.email = user_item['email']
-        user.hash_password(user_item['password'])
-        db.session.add(user)
-        db.session.commit()
-    return "dummy users created successfully"
+
 
 @auth.verify_password
 def verify_password(username, password):
