@@ -1,4 +1,3 @@
-import json
 from flask_httpauth import HTTPBasicAuth
 from flask import request, jsonify, url_for, g
 from .database import db
@@ -40,5 +39,5 @@ def verify_password(username, password):
     user = User.query.filter_by(username=username).first()
     if not user or not user.verify_password(password):
         return False
-    g.user = user
+    # g.user = user
     return True
